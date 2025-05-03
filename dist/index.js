@@ -5,7 +5,8 @@ const menu = [
     { name: "Hawaiian", price: 10 },
     { name: "Veggie", price: 9 },
 ];
-let cashRegister = 100;
+let cashRegisterBalance = 100;
+let orderQueueCount = 0;
 const orderQueue = [];
 function addNewPizza(name, price) {
     const newPizza = {
@@ -15,7 +16,6 @@ function addNewPizza(name, price) {
     menu.push(newPizza);
     return newPizza;
 }
-addNewPizza("xxxx", 11);
 function placeOrder(itemName, quantity = 1) {
     const matchedItem = menu.find((m) => m.name === itemName);
     if (!matchedItem) {
@@ -25,15 +25,46 @@ function placeOrder(itemName, quantity = 1) {
     console.log(`Item "${itemName}" was successfully found in menu.`);
     const totalOrderItemPrice = matchedItem.price * quantity;
     console.log(`Total order item price: ${totalOrderItemPrice}`);
-    const newCashRegisterBalance = totalOrderItemPrice + cashRegister;
-    cashRegister = newCashRegisterBalance;
-    console.log(`New cash register balance ${newCashRegisterBalance}`);
+    const updatedCashRegisterBalanceBalance = totalOrderItemPrice + cashRegisterBalance;
+    cashRegisterBalance = updatedCashRegisterBalanceBalance;
+    console.log(`New cash register balance ${updatedCashRegisterBalanceBalance}`);
+    const newOrderQueueCount = orderQueueCount + 1;
+    orderQueueCount = newOrderQueueCount;
     const newOrderItem = {
+        ID: newOrderQueueCount.toString(),
+        date: new Date(),
         menuItem: matchedItem,
-        quantity,
+        quantity: quantity,
+        status: "ordered",
     };
     orderQueue.push(newOrderItem);
     console.log(`Order item added to order queue: ${JSON.stringify(newOrderItem)}.`);
     return newOrderItem;
 }
-placeOrder("xxxx", 1);
+function completeOrder(orderID) {
+    const matchedOrder = orderQueue.find((o) => o.ID === orderID);
+    if (!matchedOrder) {
+        console.error(`Order ${orderID} was not found in order queue.`);
+        return null;
+    }
+    console.log(`Order ${orderID} was successfully found in order queue: ${matchedOrder}`);
+    const updatedOrder = {
+        ID: matchedOrder.ID,
+        date: matchedOrder.date,
+        menuItem: matchedOrder.menuItem,
+        quantity: matchedOrder.quantity,
+        status: "completed",
+    };
+    const index = orderQueue.findIndex((o) => o.ID === orderID);
+    if (index !== -1) {
+        orderQueue[index] = updatedOrder;
+    }
+    console.log(`Order ${orderID} was successfully updated: ${updatedOrder}`);
+    return updatedOrder;
+}
+addNewPizza("sexyPizza", 11);
+placeOrder("sexyPizza", 1);
+console.log(`Current order queue ${JSON.stringify(orderQueue)}`);
+completeOrder("111");
+completeOrder("1");
+console.log(`Current order queue ${JSON.stringify(orderQueue)}`);
