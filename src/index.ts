@@ -106,6 +106,7 @@ function completeOrder(orderID: string): OrderItem | null {
 console.log("Menu: ", menu);
 addNewPizza("sexyPizza", 11);
 console.log("Menu: ", menu);
+placeOrder("wazaaaa", 1);
 placeOrder("sexyPizza", 1);
 console.log("Current order queue: ", orderQueue);
 completeOrder("111");
