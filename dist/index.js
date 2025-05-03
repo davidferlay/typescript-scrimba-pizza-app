@@ -24,10 +24,10 @@ function placeOrder(itemName, quantity = 1) {
     }
     console.log(`Item "${itemName}" was successfully retrieved from menu.`);
     const totalOrderItemPrice = matchedItem.price * quantity;
-    console.log(`Total order item price: ${totalOrderItemPrice}`);
+    console.log("Total order item price: ", totalOrderItemPrice);
     const updatedCashRegisterBalanceBalance = totalOrderItemPrice + cashRegisterBalance;
     cashRegisterBalance = updatedCashRegisterBalanceBalance;
-    console.log(`New cash register balance ${updatedCashRegisterBalanceBalance}`);
+    console.log("New cash register balance: ", updatedCashRegisterBalanceBalance);
     const newOrderQueueCount = ++orderQueueCount;
     orderQueueCount = newOrderQueueCount;
     const newOrderItem = {
@@ -38,7 +38,7 @@ function placeOrder(itemName, quantity = 1) {
         status: "ordered",
     };
     orderQueue.push(newOrderItem);
-    console.log(`Order item added to order queue: ${JSON.stringify(newOrderItem)}.`);
+    console.log("Order item added to order queue: ", newOrderItem);
     return newOrderItem;
 }
 function completeOrder(orderID) {
@@ -47,7 +47,7 @@ function completeOrder(orderID) {
         console.error(`Order ${orderID} was not found in order queue.`);
         return null;
     }
-    console.log(`Order ${orderID} was successfully found in order queue: ${matchedOrder}`);
+    console.log(`Order ${orderID} was successfully found in order queue:`, matchedOrder);
     const updatedOrder = {
         ID: matchedOrder.ID,
         date: matchedOrder.date,
@@ -59,7 +59,7 @@ function completeOrder(orderID) {
     if (index !== -1) {
         orderQueue[index] = updatedOrder;
     }
-    console.log(`Order ${orderID} was successfully updated: ${updatedOrder}`);
+    console.log(`Order ${orderID} was successfully updated: `, updatedOrder);
     return updatedOrder;
 }
 console.log("Menu: ", menu);

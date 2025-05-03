@@ -47,12 +47,12 @@ function placeOrder(itemName: string, quantity: number = 1): OrderItem | null {
 
   // add price to cashRegisterBalance
   const totalOrderItemPrice: number = matchedItem.price * quantity;
-  console.log(`Total order item price: ${totalOrderItemPrice}`);
+  console.log("Total order item price: ", totalOrderItemPrice);
 
   const updatedCashRegisterBalanceBalance: number =
     totalOrderItemPrice + cashRegisterBalance;
   cashRegisterBalance = updatedCashRegisterBalanceBalance;
-  console.log(`New cash register balance ${updatedCashRegisterBalanceBalance}`);
+  console.log("New cash register balance: ", updatedCashRegisterBalanceBalance);
 
   // const newOrderQueueCount: number = orderQueueCount + 1;
   const newOrderQueueCount: number = ++orderQueueCount;
@@ -66,9 +66,7 @@ function placeOrder(itemName: string, quantity: number = 1): OrderItem | null {
     status: "ordered",
   };
   orderQueue.push(newOrderItem);
-  console.log(
-    `Order item added to order queue: ${JSON.stringify(newOrderItem)}.`
-  );
+  console.log("Order item added to order queue: ", newOrderItem);
 
   // return order for info
   return newOrderItem;
@@ -82,7 +80,8 @@ function completeOrder(orderID: string): OrderItem | null {
     return null;
   }
   console.log(
-    `Order ${orderID} was successfully found in order queue: ${matchedOrder}`
+    `Order ${orderID} was successfully found in order queue:`,
+    matchedOrder
   );
 
   // mark it as completed
@@ -99,7 +98,7 @@ function completeOrder(orderID: string): OrderItem | null {
     // -1 -> no match is found
     orderQueue[index] = updatedOrder;
   }
-  console.log(`Order ${orderID} was successfully updated: ${updatedOrder}`);
+  console.log(`Order ${orderID} was successfully updated: `, updatedOrder);
   // return the updated order
   return updatedOrder;
 }
