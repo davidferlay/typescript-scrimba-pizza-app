@@ -1,15 +1,17 @@
 "use strict";
+let menuItemID = 1;
 const menu = [
-    { name: "Margherita", price: 8 },
-    { name: "Pepperoni", price: 10 },
-    { name: "Hawaiian", price: 10 },
-    { name: "Veggie", price: 9 },
+    { ID: menuItemID++, name: "Margherita", price: 8 },
+    { ID: menuItemID++, name: "Pepperoni", price: 10 },
+    { ID: menuItemID++, name: "Hawaiian", price: 10 },
+    { ID: menuItemID++, name: "Veggie", price: 9 },
 ];
 let cashRegisterBalance = 100;
 let orderQueueCount = 0;
 const orderQueue = [];
 function addNewPizza(name, price) {
     const newPizza = {
+        ID: menuItemID++,
         name,
         price,
     };
@@ -55,13 +57,23 @@ function completeOrder(orderID) {
     console.table(matchedOrder);
     return matchedOrder;
 }
-function getPizzaDetail(identifier) {
+function getMenuItem(identifier) {
     if (typeof identifier === "string") {
         return menu.find((pizza) => pizza.name.toLowerCase() === identifier.toLowerCase());
     }
     else {
         throw new TypeError("Parameter `identifier` must be a string");
     }
+}
+function updateMenuItem(ID, updates) {
+    const matchedItem = menu.find((m) => m.ID === ID);
+    if (!matchedItem) {
+        console.error(`Item with ID '${ID}' was not found in menu.`);
+        return null;
+    }
+    Object.assign(matchedItem, updates);
+    console.log(`Item '${ID}' was successfully updated in menu with updates:`, updates);
+    return matchedItem;
 }
 addNewPizza("SexyPizza", 11);
 console.log("📋 Current menu:");
@@ -76,4 +88,7 @@ completeOrder("111");
 completeOrder("1");
 console.log("📦 Current order queue:");
 console.table(orderQueue);
-console.table(getPizzaDetail("SexyPizza"));
+console.table(getMenuItem("SexyPizza"));
+updateMenuItem(1, { price: 17 });
+console.log("📋 Current menu:");
+console.table(menu);

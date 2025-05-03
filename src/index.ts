@@ -1,4 +1,5 @@
 interface MenuItem {
+  ID: number;
   name: string;
   price: number;
 }
@@ -11,11 +12,13 @@ interface OrderItem {
   status: "ordered" | "completed";
 }
 
+let menuItemID: number = 1;
+
 const menu: MenuItem[] = [
-  { name: "Margherita", price: 8 },
-  { name: "Pepperoni", price: 10 },
-  { name: "Hawaiian", price: 10 },
-  { name: "Veggie", price: 9 },
+  { ID: menuItemID++, name: "Margherita", price: 8 },
+  { ID: menuItemID++, name: "Pepperoni", price: 10 },
+  { ID: menuItemID++, name: "Hawaiian", price: 10 },
+  { ID: menuItemID++, name: "Veggie", price: 9 },
 ];
 
 let cashRegisterBalance: number = 100;
@@ -26,6 +29,7 @@ const orderQueue: OrderItem[] = [];
 
 function addNewPizza(name: string, price: number): MenuItem {
   const newPizza: MenuItem = {
+    ID: menuItemID++,
     name,
     price,
   };
@@ -88,13 +92,27 @@ function completeOrder(orderID: string): OrderItem | null {
   return matchedOrder;
 }
 
-function getPizzaDetail(identifier: string | number) {
+function getMenuItem(identifier: string): MenuItem | undefined {
   if (typeof identifier === "string") {
     return menu.find((pizza) => pizza.name.toLowerCase() === identifier.toLowerCase());
   } else {
     throw new TypeError("Parameter `identifier` must be a string");
   }
 }
+
+type UpdatedMenuItem = Partial<MenuItem>;
+function updateMenuItem(ID: number, updates: UpdatedMenuItem): MenuItem | null {
+  const matchedItem = menu.find((m) => m.ID === ID);
+  if (!matchedItem) {
+    console.error(`Item with ID '${ID}' was not found in menu.`);
+    return null;
+  }
+  Object.assign(matchedItem, updates);
+  console.log(`Item '${ID}' was successfully updated in menu with updates:`, updates);
+  return matchedItem;
+}
+
+// Execution logic
 
 addNewPizza("SexyPizza", 11);
 
@@ -115,4 +133,8 @@ completeOrder("1");
 console.log("📦 Current order queue:");
 console.table(orderQueue);
 
-console.table(getPizzaDetail("SexyPizza"));
+console.table(getMenuItem("SexyPizza"));
+updateMenuItem(1, { price: 17 });
+
+console.log("📋 Current menu:");
+console.table(menu);
