@@ -3,14 +3,12 @@ interface MenuItem {
   price: number;
 }
 
-type OrderStatus = "ordered" | "completed";
-
 interface OrderItem {
   ID: string;
   date: Date;
   menuItem: MenuItem;
   quantity: number;
-  status: OrderStatus;
+  status: "ordered" | "completed";
 }
 
 const menu: MenuItem[] = [
