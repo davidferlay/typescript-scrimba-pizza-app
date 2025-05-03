@@ -22,13 +22,13 @@ function placeOrder(itemName, quantity = 1) {
         console.error(`Item "${itemName}" was not found in menu.`);
         return null;
     }
-    console.log(`Item "${itemName}" was successfully found in menu.`);
+    console.log(`Item "${itemName}" was successfully retrieved from menu.`);
     const totalOrderItemPrice = matchedItem.price * quantity;
     console.log(`Total order item price: ${totalOrderItemPrice}`);
     const updatedCashRegisterBalanceBalance = totalOrderItemPrice + cashRegisterBalance;
     cashRegisterBalance = updatedCashRegisterBalanceBalance;
     console.log(`New cash register balance ${updatedCashRegisterBalanceBalance}`);
-    const newOrderQueueCount = orderQueueCount + 1;
+    const newOrderQueueCount = ++orderQueueCount;
     orderQueueCount = newOrderQueueCount;
     const newOrderItem = {
         ID: newOrderQueueCount.toString(),
@@ -62,9 +62,11 @@ function completeOrder(orderID) {
     console.log(`Order ${orderID} was successfully updated: ${updatedOrder}`);
     return updatedOrder;
 }
+console.log("Menu: ", menu);
 addNewPizza("sexyPizza", 11);
+console.log("Menu: ", menu);
 placeOrder("sexyPizza", 1);
-console.log(`Current order queue ${JSON.stringify(orderQueue)}`);
+console.log("Current order queue: ", orderQueue);
 completeOrder("111");
 completeOrder("1");
-console.log(`Current order queue ${JSON.stringify(orderQueue)}`);
+console.log("Current order queue: ", orderQueue);
