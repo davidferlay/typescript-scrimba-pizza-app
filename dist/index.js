@@ -55,16 +55,25 @@ function completeOrder(orderID) {
     console.table(matchedOrder);
     return matchedOrder;
 }
-console.log("📋 Current menu:");
-console.table(menu);
-addNewPizza("sexyPizza", 11);
+function getPizzaDetail(identifier) {
+    if (typeof identifier === "string") {
+        return menu.find((pizza) => pizza.name.toLowerCase() === identifier.toLowerCase());
+    }
+    else {
+        throw new TypeError("Parameter `identifier` must be a string");
+    }
+}
+addNewPizza("SexyPizza", 11);
 console.log("📋 Current menu:");
 console.table(menu);
 placeOrder("wazaaaa", 1);
-placeOrder("sexyPizza", 1);
+placeOrder("SexyPizza", 1);
+placeOrder("Margherita", 1);
+placeOrder("Hawaiian", 1);
 console.log("📦 Current order queue:");
 console.table(orderQueue);
 completeOrder("111");
 completeOrder("1");
 console.log("📦 Current order queue:");
 console.table(orderQueue);
+console.table(getPizzaDetail("SexyPizza"));
