@@ -14,20 +14,21 @@ function addNewPizza(name, price) {
         price,
     };
     menu.push(newPizza);
+    console.log(`New pizza '${name}' was added to menu.`);
     return newPizza;
 }
 function placeOrder(itemName, quantity = 1) {
     const matchedItem = menu.find((m) => m.name === itemName);
     if (!matchedItem) {
-        console.error(`Item "${itemName}" was not found in menu.`);
+        console.error(`Item '${itemName}' was not found in menu.`);
         return null;
     }
-    console.log(`Item "${itemName}" was successfully retrieved from menu.`);
+    console.log(`Item '${itemName}' was successfully retrieved from menu.`);
     const totalOrderItemPrice = matchedItem.price * quantity;
     console.log("Total order item price: ", totalOrderItemPrice);
-    const updatedCashRegisterBalanceBalance = totalOrderItemPrice + cashRegisterBalance;
-    cashRegisterBalance = updatedCashRegisterBalanceBalance;
-    console.log("New cash register balance: ", updatedCashRegisterBalanceBalance);
+    const updatedCashRegisterBalance = totalOrderItemPrice + cashRegisterBalance;
+    cashRegisterBalance = updatedCashRegisterBalance;
+    console.log("New cash register balance: ", updatedCashRegisterBalance);
     const newOrderQueueCount = ++orderQueueCount;
     orderQueueCount = newOrderQueueCount;
     const newOrderItem = {
@@ -38,7 +39,8 @@ function placeOrder(itemName, quantity = 1) {
         status: "ordered",
     };
     orderQueue.push(newOrderItem);
-    console.log("Order item added to order queue: ", newOrderItem);
+    console.log("Order item added to order queue: ");
+    console.table(newOrderItem);
     return newOrderItem;
 }
 function completeOrder(orderID) {
@@ -47,27 +49,22 @@ function completeOrder(orderID) {
         console.error(`Order ${orderID} was not found in order queue.`);
         return null;
     }
-    console.log(`Order ${orderID} was successfully found in order queue:`, matchedOrder);
-    const updatedOrder = {
-        ID: matchedOrder.ID,
-        date: matchedOrder.date,
-        menuItem: matchedOrder.menuItem,
-        quantity: matchedOrder.quantity,
-        status: "completed",
-    };
-    const index = orderQueue.findIndex((o) => o.ID === orderID);
-    if (index !== -1) {
-        orderQueue[index] = updatedOrder;
-    }
-    console.log(`Order ${orderID} was successfully updated: `, updatedOrder);
-    return updatedOrder;
+    console.log(`Order ${orderID} was successfully found in order queue.`);
+    matchedOrder.status = "completed";
+    console.log(`Order ${orderID} was successfully updated: `);
+    console.table(matchedOrder);
+    return matchedOrder;
 }
-console.log("Menu: ", menu);
+console.log("📋 Current menu:");
+console.table(menu);
 addNewPizza("sexyPizza", 11);
-console.log("Menu: ", menu);
+console.log("📋 Current menu:");
+console.table(menu);
 placeOrder("wazaaaa", 1);
 placeOrder("sexyPizza", 1);
-console.log("Current order queue: ", orderQueue);
+console.log("📦 Current order queue:");
+console.table(orderQueue);
 completeOrder("111");
 completeOrder("1");
-console.log("Current order queue: ", orderQueue);
+console.log("📦 Current order queue:");
+console.table(orderQueue);
