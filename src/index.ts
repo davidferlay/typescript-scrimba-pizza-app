@@ -38,6 +38,17 @@ function addNewPizza(name: string, price: number): MenuItem {
   return newPizza;
 }
 
+// To illustrate the Omit type
+function addNewPizzaVariant(pizza: Omit<MenuItem, "ID">): MenuItem {
+  const newPizza: MenuItem = {
+    ID: menuItemID++,
+    ...pizza,
+  };
+  menu.push(newPizza);
+  console.log(`New pizza '${pizza.name}' was added to menu.`);
+  return newPizza;
+}
+
 function placeOrder(itemName: string, quantity: number = 1): OrderItem | null {
   // look item in array
   // in 'menu' array, we look for .name item which equals arg
@@ -133,6 +144,7 @@ function updateMenuItem(ID: number, updates: UpdatedMenuItem): MenuItem | null {
 // Execution logic
 
 addNewPizza("SexyPizza", 11);
+addNewPizzaVariant({ name: "SexyPizzaVariant", price: 12 });
 
 console.log("📋 Current menu:");
 console.table(menu);

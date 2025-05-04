@@ -19,6 +19,15 @@ function addNewPizza(name, price) {
     console.log(`New pizza '${name}' was added to menu.`);
     return newPizza;
 }
+function addNewPizzaVariant(pizza) {
+    const newPizza = {
+        ID: menuItemID++,
+        ...pizza,
+    };
+    menu.push(newPizza);
+    console.log(`New pizza '${pizza.name}' was added to menu.`);
+    return newPizza;
+}
 function placeOrder(itemName, quantity = 1) {
     const matchedItem = menu.find((m) => m.name === itemName);
     if (!matchedItem) {
@@ -90,6 +99,7 @@ function updateMenuItem(ID, updates) {
     return matchedItem;
 }
 addNewPizza("SexyPizza", 11);
+addNewPizzaVariant({ name: "SexyPizzaVariant", price: 12 });
 console.log("📋 Current menu:");
 console.table(menu);
 placeOrder("wazaaaa", 1);
