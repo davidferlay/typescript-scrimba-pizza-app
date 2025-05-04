@@ -120,3 +120,23 @@ function getLastArrayItem(array) {
 }
 console.table(getLastArrayItem(menu));
 console.table(getLastArrayItem(orderQueue));
+function addToArray(array, item) {
+    array.push(item);
+    return array;
+}
+console.table(addToArray(menu, { ID: menuItemID++, name: "Generic Margherita", price: 7 }));
+console.table(addToArray(menu, { ID: menuItemID++, name: "Generic Margherita specified", price: 7 }));
+console.log(addToArray(orderQueue, {
+    ID: (++orderQueueCount).toString(),
+    date: new Date(),
+    menuItem: menu[2],
+    quantity: 1,
+    status: "Some unauthorized value",
+}));
+console.log(addToArray(orderQueue, {
+    ID: (++orderQueueCount).toString(),
+    date: new Date(),
+    menuItem: menu[2],
+    quantity: 1,
+    status: "ordered",
+}));

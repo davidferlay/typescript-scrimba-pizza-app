@@ -111,6 +111,7 @@ function getMenuItem(identifier: string): MenuItem | undefined {
   }
 }
 
+// to illustrate partial Updates type
 type UpdatedMenuItem = Partial<MenuItem>;
 function updateMenuItem(ID: number, updates: UpdatedMenuItem): MenuItem | null {
   const matchedItem = menu.find((m) => m.ID === ID);
@@ -167,6 +168,9 @@ console.table(getMenuItem("SexyPizza"));
 updateMenuItem(1, { price: 17 });
 updateMenuItem(1, { name: "Super Margherita" });
 
+// to illustrate Generics
+// 1st arg is an array of generic type
+// return value is an item from of that generic type, or undefined in case logic fails
 function getLastArrayItem<Type>(array: Type[]): Type | undefined {
   // "Type" here is an arbitrary defined placeholder, it could be anything
   return array[array.length - 1];
@@ -174,3 +178,36 @@ function getLastArrayItem<Type>(array: Type[]): Type | undefined {
 
 console.table(getLastArrayItem(menu));
 console.table(getLastArrayItem(orderQueue));
+
+// to illustrate Generics with several args
+// 1st arg is an array of generic type
+// 2nd arg is a item of this array
+// return value is an array of generic type
+function addToArray<T>(array: T[], item: T): T[] {
+  array.push(item);
+  return array;
+}
+
+console.table(addToArray(menu, { ID: menuItemID++, name: "Generic Margherita", price: 7 }));
+// For better readability, specify type when executing function
+console.table(addToArray<MenuItem>(menu, { ID: menuItemID++, name: "Generic Margherita specified", price: 7 }));
+
+console.log(
+  addToArray(orderQueue, {
+    ID: (++orderQueueCount).toString(),
+    date: new Date(),
+    menuItem: menu[2],
+    quantity: 1,
+    status: "Some unauthorized value", // But values of union type defined are not enforced by default here
+  })
+);
+console.log(
+  addToArray<OrderItem>(orderQueue, {
+    // Note '<OrderItem>' here, to enforce union type of 'status' field
+    ID: (++orderQueueCount).toString(),
+    date: new Date(),
+    menuItem: menu[2],
+    quantity: 1,
+    status: "ordered", // Value now enforced
+  })
+);
