@@ -71,8 +71,22 @@ function updateMenuItem(ID, updates) {
         console.error(`Item with ID '${ID}' was not found in menu.`);
         return null;
     }
-    Object.assign(matchedItem, updates);
-    console.log(`Item '${ID}' was successfully updated in menu with updates:`, updates);
+    if (updates.name !== undefined) {
+        if (typeof updates.name !== "string" || updates.name.trim() === "") {
+            console.error("Invalid name provided for update.");
+            return null;
+        }
+        matchedItem.name = updates.name.trim();
+    }
+    if (updates.price !== undefined) {
+        if (typeof updates.price !== "number" || updates.price < 0) {
+            console.error("Invalid price provided for update.");
+            return null;
+        }
+        matchedItem.price = updates.price;
+    }
+    console.log(`Item '${ID}' was successfully updated in menu:`);
+    console.table(matchedItem);
     return matchedItem;
 }
 addNewPizza("SexyPizza", 11);
@@ -90,5 +104,4 @@ console.log("📦 Current order queue:");
 console.table(orderQueue);
 console.table(getMenuItem("SexyPizza"));
 updateMenuItem(1, { price: 17 });
-console.log("📋 Current menu:");
-console.table(menu);
+updateMenuItem(1, { name: "Super Margherita" });
