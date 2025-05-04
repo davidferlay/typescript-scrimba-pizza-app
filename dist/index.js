@@ -115,3 +115,8 @@ console.table(orderQueue);
 console.table(getMenuItem("SexyPizza"));
 updateMenuItem(1, { price: 17 });
 updateMenuItem(1, { name: "Super Margherita" });
+function getLastArrayItem(array) {
+    return array[array.length - 1];
+}
+console.table(getLastArrayItem(menu));
+console.table(getLastArrayItem(orderQueue));
